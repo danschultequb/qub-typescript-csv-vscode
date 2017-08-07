@@ -1,0 +1,97 @@
+{
+  "name": "qub-csv-vscode",
+  "displayName": "CSV Tools",
+  "description": "CSV language support for VS Code",
+  "version": "1.0.0",
+  "publisher": "qub",
+  "categories": [
+    "Languages",
+    "Linters",
+    "Other"
+  ],
+  "galleryBanner": {
+    "color": "994d00",
+    "theme": "light"
+  },
+  "repository": {
+    "url": "https://github.com/danschultequb/qub-typescript-csv-vscode"
+  },
+  "bugs": {
+    "url": "https://github.com/danschultequb/qub-typescript-csv-vscode/issues",
+    "email": "dan.schulte.qub@live.com"
+  },
+  "homepage": "https://github.com/danschultequb/qub-typescript-csv-vscode#readme",
+  "engines": {
+    "vscode": "^1.14.0"
+  },
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "activationEvents": [
+    "onLanguage:csv"
+  ],
+  "main": "./output/sources/main",
+  "typings": "./output/sources/main",
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "Qub CSV",
+      "properties": {
+        "qub-csv-vscode.telemetry.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether or not telemetry will be enabled for the CSV Tools extension."
+        }
+      }
+    },
+    "languages": [
+      {
+        "id": "csv",
+        "extensions": [
+          ".csv"
+        ],
+        "aliases": [
+          "CSV"
+        ]
+      }
+    ]
+  },
+  "files": [
+    "output/sources/"
+  ],
+  "scripts": {
+    "build": "tsc -p .",
+    "prepublishOnly": "npm run build",
+    "test": "mocha --colors --require source-map-support/register --ui tdd output/tests/",
+    "coverage": "nyc npm test && open-cli output/coverage/index.html",
+    "travis-test": "npm run setup && npm run build && nyc --reporter=text-lcov npm test | coveralls",
+    "setup": "npm install && node ./node_modules/vscode/bin/install"
+  },
+  "nyc": {
+    "reporter": [
+      "html",
+      "text-summary"
+    ],
+    "report-dir": "output/coverage/",
+    "temp-directory": "output/.nyc_output/",
+    "exclude": [
+      "output/tests"
+    ]
+  },
+  "devDependencies": {
+    "@types/mocha": "2.2.41",
+    "@types/node": "8.0.19",
+    "coveralls": "2.13.1",
+    "mocha": "3.5.0",
+    "nyc": "11.1.0",
+    "open-cli": "1.0.5",
+    "source-map-support": "0.4.15",
+    "typescript": "2.4.2"
+  },
+  "dependencies": {
+    "moment": "2.18.1",
+    "qub": "1.2.7",
+    "qub-telemetry": "1.0.0",
+    "qub-telemetry-applicationinsights": "1.0.0",
+    "qub-vscode": "1.0.12",
+    "qub-csv": "1.0.0"
+  }
+}
